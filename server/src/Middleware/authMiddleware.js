@@ -11,7 +11,9 @@ const prodectRoute = async (req, res, next) => {
     try {
       // Token verification
       const decode = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      console.log("decode----->" , decode )
       const user = await User.findById(decode.userId);
+      console.log("---> user " , user)
 
       if (!user) {
         return res.status(404).json({ message: "User not found", success: false });

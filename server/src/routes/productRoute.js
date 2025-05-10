@@ -11,6 +11,6 @@ const router = express.Router();
 router.get("/", prodectRoute, adminRoute, getAllproducts);
 router.get("/featured", getFeatureProducts);
 router.post("/create", prodectRoute, adminRoute, createProduct);
-router.delete("/delete" , prodectRoute, adminRoute , deleteProduct )
+router.delete("/:id" , prodectRoute, adminRoute , deleteProduct )
 
 module.exports = router;
