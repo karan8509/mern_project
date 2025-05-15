@@ -34,9 +34,10 @@ const getFeatureProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { name, description, price, image, category } = req.body;
+
     const cloudinaryResponse = null;
     if (image) {
-      cloudinaryResponse = await v2.uploader.upload(image, {
+       cloudinaryResponse = await v2.uploader.upload(image, {
         folder: "products",
       });
     }
@@ -64,7 +65,6 @@ const deleteProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-
     console.log("kese url hai " , product.image)
     if (product.image) {
       const publicId = product.image.split("/").pop().split(".")[0];

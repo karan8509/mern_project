@@ -32,7 +32,7 @@ const prodectRoute = async (req, res, next) => {
       }
 
     
-      return res.status(500).json({ message: "Internal server error", success: false });
+      return res.status(500).json({ message: "success", success: true });
     }
   } catch (error) {
     console.log("Error in ProductRoutes middleware:", error);

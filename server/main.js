@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyparser.json());
 app.use(cors())
+
 // app.use(cors({
 //   origin: 'http://localhost:5173/', // React app ka URL
 //   credentials: true // VERY IMPORTANT: Cookie allow karne ke liye
@@ -25,6 +26,8 @@ app.use(cors())
 app.get("/", (req , res) => {
   res.json({ message: "Create API", success: true });
 });  
+
+
 app.use("/api/auth",authRoutes)
 app.use("/api/product",productRoute)
 app.use("/api/cart"  , cartRoute)

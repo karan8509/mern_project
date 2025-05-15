@@ -6,14 +6,12 @@ const { default: mongoose } = require("mongoose");
 require("dotenv").config();
 
 const generateToken = (userId) => {
-  const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1d",
-  });
+ 
   const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",
   });
   return {
-    accessToken,
+   
     refreshToken,
   };
 };
@@ -46,6 +44,8 @@ const setcookies = (res, refreshToken) => {
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    console.log("-->" , name , email , password)
+
     if (!name || !email || !password){
       res.json({ message: "All fields are required", success: false });
       return;
@@ -56,21 +56,21 @@ const signup = async (req, res) => {
       res.json({ message: "User already exists", success: false });
       return;
     }
-    const salt = await bcrypt.genSalt(1)
+    const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(password, salt);
-    const user = await User.create({ name, email, password: hashPassword });
-
+    const user =  await User.create({name, email, password: hashPassword });
+    
+   console.log("->" , user)
     const { refreshToken } = generateToken(user._id);
     console.log(refreshToken);
 
-    await storeRefreshToken(user._id, refreshToken); // redis database
-    setcookies(res, refreshToken);
+     await storeRefreshToken(user._id, refreshToken); // redis database
+     setcookies(res, refreshToken);
 
     res.json({
       id: user._id,
       name,
       email,
-      // role ,
       success: true,
       message: "Acount Successfully Create",
     });
@@ -84,6 +84,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
+      console.log("->" , email,password)
       res.json({ message: "All fields are required", success: false });
       return;
     }
@@ -105,9 +106,10 @@ const login = async (req, res) => {
     res.json({
       message: "successfully acount login",
       success: true,
+      user,
       });
   } catch (error) {
-    res.json({ message: error.message, success: false });
+    res.json({ message: "server error"  || error.message, success: false });
   }
 };
 
@@ -170,4 +172,15 @@ const logout = async (req, res) => {
 //   }
 // };
 
-module.exports = { signup, login, logout };
+
+
+const getProfile = (req , res) => {
+  try {
+      res.json(req.user)
+  } catch (error) {
+    res.json({error : error.message})
+  }
+}
+
+
+module.exports = { signup, login, logout , getProfile };
