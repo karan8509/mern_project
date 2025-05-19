@@ -6,13 +6,17 @@ import Navbar from "./component/Navbar";
 import { Toaster } from "react-hot-toast";
 import useUserStore from "./stores/useUserStore";
 import { useEffect } from "react";
+import LoadingSpinner from "./component/LoadingSpinner";
+import AdminPage from "./pages/AdminPage";
 
 const App = () => {
-  const { user, checkAuth } = useUserStore();
-
+  const { user, checkAuth, checkingAuth } = useUserStore();
+  console.log("-<>  access", user);
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (checkingAuth) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
@@ -26,17 +30,19 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/signup" element={ user ? <HomePage /> :  <SignUpPage />} />   this is commen logic
-          <Route path="/login" element={ user ? <HomePage /> :<LoginPages />} /> */}
-
           <Route
             path="/signup"
-            element={!user ? <SignUpPage /> : <Navigate to="/" />}
+            element={user ? <Navigate to="/" /> : <SignUpPage />}
           />
           <Route
             path="/login"
-            element={!user ? <LoginPages /> : <Navigate to="/" />}
+            element={user ? <Navigate to="/" /> : <LoginPages />}
           />
+          <Route
+            path="/secret-dashboard"
+            element={user ?  <AdminPage />  : <Navigate to="/" />}
+          />
+          <Route path="*" element={<>404</>} />
         </Routes>
       </div>
       <Toaster />

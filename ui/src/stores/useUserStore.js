@@ -22,15 +22,14 @@ const useUserStore = create((set, get) => ({
         password,
         confirmPassword,
       });
-      set({ user: user, loding: false });
+      set({ user, loding: false });
+
       {
         !success ? toast.error(message) : toast.success(message); //  only use ternary operator
       }
-
-      // console.log("->", res.data.message);
     } catch (error) {
-      console.log("Error in SignUp");
-      toast.error(error.response.data.message || "An error occurred");
+      console.log("Error in SignUp useUserStore");
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   },
 
@@ -63,7 +62,7 @@ const useUserStore = create((set, get) => ({
         toast.error(message);
         return;
       }
-      set({ user: user, loding: false });
+      set({ user: user, loading: false });
       toast.success(message);
     } catch (error) {
       toast.error(error.response?.data?.message || "Internal Server Error");
@@ -73,12 +72,22 @@ const useUserStore = create((set, get) => ({
   checkAuth: async () => {
     set({ checkingAuth: true });
     try {
-      const {
-        data: { user },
-      } = await axios.get("/auth/profile");
+      const user = await axios.get("/auth/profile");
+      // console.log("--->krn role", typeof user?.data?.role);
       set({ user: user, checkingAuth: false });
+  
     } catch (error) {
       set({ user: null, checkingAuth: false });
+    }
+  },
+
+  logout: async () => {
+    set({ checkingAuth: true });
+    try {
+      await axios.post("/auth/logout");
+      set({ user: null, checkingAuth: false });
+    } catch (error) {
+      toast.error(error.response?.data?.message);
     }
   },
 }));
