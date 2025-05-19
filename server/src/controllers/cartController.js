@@ -4,8 +4,6 @@ const getCartProduct = async (req, res) => {
     const products = await Product.find({
       _id: { $in: req.user.cartItems.map((e) => e.product) },
     });
-    // array products : [1,2,3]
-    // producs : [Model,Model,Model]
     const cartItems = products.map((product) => {
       const item = req.user.cartItems.find(
         (cartItem) => cartItem.product === product._id
@@ -17,6 +15,8 @@ const getCartProduct = async (req, res) => {
     console.log("Error in getCart");
   }
 };
+
+
 
 const addToCart = async (req, res) => {
   try {

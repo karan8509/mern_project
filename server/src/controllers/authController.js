@@ -44,13 +44,11 @@ const setcookies = (res, refreshToken) => {
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log("-->" , name , email , password)
 
     if (!name || !email || !password){
       res.json({ message: "All fields are required", success: false });
       return;
     }
-    // console.log(name, email, password);
     const existEmail = await User.findOne({ email });
     if (existEmail) {
       res.json({ message: "User already exists", success: false });
@@ -60,17 +58,16 @@ const signup = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, salt);
     const user =  await User.create({name, email, password: hashPassword });
     
-   console.log("->" , user)
     const { refreshToken } = generateToken(user._id);
-    console.log(refreshToken);
 
      await storeRefreshToken(user._id, refreshToken); // redis database
      setcookies(res, refreshToken);
 
     res.json({
-      id: user._id,
-      name,
-      email,
+      // id: user._id,
+      // name,
+      // email,
+      user,
       success: true,
       message: "Acount Successfully Create",
     });
@@ -84,7 +81,6 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      console.log("->" , email,password)
       res.json({ message: "All fields are required", success: false });
       return;
     }
@@ -116,10 +112,6 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
-
-
-    console.log(">", refreshToken, );
-
     if (refreshToken) {
       const decoded = jwt.verify(
         refreshToken,
@@ -176,7 +168,8 @@ const logout = async (req, res) => {
 
 const getProfile = (req , res) => {
   try {
-      res.json(req.user)
+      const user = req.user;
+      res.json(user)
   } catch (error) {
     res.json({error : error.message})
   }

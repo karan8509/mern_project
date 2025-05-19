@@ -1,6 +1,7 @@
 const client = require("../config/redis");
 const Product = require("../models/productModel");
-const v2 = require("../config/cloudinary");
+
+const cloudinary = require("../config/cloudinary");
 
 const getAllproducts = async (req, res) => {
   try {
@@ -34,28 +35,26 @@ const getFeatureProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { name, description, price, image, category } = req.body;
+    console.log("->" , name, description, price, image, category )
 
-    const cloudinaryResponse = null;
-    if (image) {
-       cloudinaryResponse = await v2.uploader.upload(image, {
-        folder: "products",
-      });
-    }
+    let cloudinaryResponse =  null;
+  		if (image) {
+			cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
+		}  
     const product = await Product.create({
       name,
       description,
       price,
-      image: cloudinaryResponse?.secure_url
-        ? cloudinaryResponse.secure_url
-        : "",
+      image: cloudinaryResponse?.secure_url || "",
       category,
     });
-    console.log("productUrl --->" , product.secure_url) /// check ?
 
-    res.json(product);  //  normal data ja rha hoga 
+    console.log("productUrl --->", product.image);
+
+    res.status(201).json(product);
   } catch (error) {
-    console.log("Error in Create Product  controller");
-    res.json({ message: "server Error", success: false });
+    console.error("Error in Create Product controller:", error.message);
+    res.json({ success: false, message: "Server Error", error: error.message });
   }
 };
 
