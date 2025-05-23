@@ -9,7 +9,6 @@ const CategoryItem = ({ category }) => {
 					<div className='gradient-overlay' />
 					<img
 						src={category.imageUrl}
-						// alt={category.name}
 						className='category-image'
 						loading='lazy'
 					/>

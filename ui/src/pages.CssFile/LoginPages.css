@@ -1,26 +1,30 @@
-/* LoginPages.css */
-.sign-up-page {
+
+.login-page {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background: linear-gradient(to top right, #1f2937, #2d3748, #064e3b);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
 }
+
 
 .card {
   border-radius: 12px;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   width: 100%;
   max-width: 350px;
   transition: all 0.3s ease-in-out;
+  padding: 2rem 1rem;
 }
 
+
 .card h2 {
+  margin-top: 1rem;
   font-size: 1.8rem;
   color: #00796b;
   font-weight: 600;
@@ -29,9 +33,18 @@
 .form-group {
   width: 100%;
 }
+
+.input-container {
+  position: relative;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .input-container input {
   width: 100%;
-  max-width: 15rem; /* Fixed width */
+  max-width: 15rem;
   padding-left: 2.5rem;
   padding-right: 1rem;
   font-size: 0.875rem;
@@ -40,12 +53,6 @@
   color: white;
   border: 1px solid #4b5563;
   transition: all 0.3s;
-}
-
-.input-container input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #10b981;
-  border-color: #10b981;
 }
 
 .input-container .icon {
@@ -62,7 +69,7 @@
   justify-content: center;
   background-color: #00796b;
   color: #ffffff;
-  padding: 0.2rem 1.1rem;
+  padding: 0.2rem 0.1rem;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -82,7 +89,7 @@
 
 .footer-text {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: -1.5rem;
   color: #555;
   font-size: 0.9rem;
 }

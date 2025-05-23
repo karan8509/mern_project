@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {  BarChart,  PlusCircle, ShoppingBasket } from 'lucide-react'
 import CreateProductForm from '../component/CreateProductForm'
@@ -6,6 +6,7 @@ import ProductsList from '../component/ProductsList'
 import AnalyticsTab from '../component/AnalyticsTab'
 import { motion } from 'framer-motion'
 import "../pages.CssFile/AdminPage.css"
+import usePrductStore from '../stores/useProductStore'
 
 
 const tabs = [
@@ -15,7 +16,13 @@ const tabs = [
 ]
 
 const AdminPage = () => {
-    const [activeTab , setActiveTab] = useState()
+    const [activeTab , setActiveTab] = useState();
+	const {fetchAllProducts}= usePrductStore();
+
+	useEffect(()=>{
+		fetchAllProducts()
+	},[fetchAllProducts])
+
 return (
 	<div className='admin-page'>
 		<div className='admin-container'>

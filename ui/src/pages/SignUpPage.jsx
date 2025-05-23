@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, User, UserPlus, Loader,  } from "lucide-react";
+import { Mail, Lock, User, UserPlus, Loader, } from "lucide-react";
 import '../pages.CssFile/SignUpPage.css'; // Import the external CSS file
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import useUserStore from "../stores/useUserStore"
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -12,15 +12,17 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
-const {SignUp , loading} = useUserStore();
-
-
-  const handleSubmit = (e) => {
+  const { SignUp, loading } = useUserStore();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("called here")
-    SignUp(formData)
-    
+    try {
+      const result = await SignUp(formData);
+      console.log("Signup successful", result);
+    } catch (error) {
+      console.log("Signup failed", error.message);
+    }
   };
+
 
   return (
     <div className="sign-up-page">

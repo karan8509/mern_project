@@ -1,0 +1,28 @@
+/* App.css */
+
+.app-container {
+  min-height: 100vh;
+  background-color: #111827; /* bg-gray-900 */
+  color: white;
+  position: relative;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(16, 185, 129, 0.3) 0%,
+    rgba(10, 80, 60, 0.2) 45%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  z-index: 0;
+}
+
+.main-content {
+  position: relative;
+  z-index: 10;
+  padding-top: 10px ;
+}

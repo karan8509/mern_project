@@ -1,17 +1,18 @@
 import { LogIn, LogOut, Lock, ShoppingCart, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import "../pages.CssFile/Navbar.css";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useUserStore from "../stores/useUserStore";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useUserStore();
+  const isAdmin = user?.data?.role === "admin";
    
-  const {user , logout} = useUserStore()
-  const isAdmin = user?.data?.role === "admin"
-  // console.log(isAdmin)
- 
+  
+  
+
+
   return (
     <header className="navbar-header">
       <div className="container">
@@ -19,8 +20,12 @@ const Navbar = () => {
           <Link to="/" className="navbar-logo">
             <span>E-Commerce</span>
           </Link>
+      
 
-          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          <button
+            className="menu-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
             <span className="hamburger"></span>
             <span className="hamburger"></span>
             <span className="hamburger"></span>
@@ -30,7 +35,7 @@ const Navbar = () => {
             <Link to="/" className="nav-link">Home</Link>
 
             {user && (
-              <Link to="/cart" className="nav-link relative group">
+              <Link to="/cart" className="nav-link relative group cart-link">
                 <ShoppingCart size={22} />
                 <span className="hidden sm:inline ml-1">Cart</span>
                 <span className="cart-badge">0</span>
@@ -40,7 +45,7 @@ const Navbar = () => {
             {isAdmin && (
               <Link to="/secret-dashboard" className="admin-link">
                 <Lock size={18} />
-                <span className="hidden sm:inline">Dashboard</span>
+                <span className="hidden sm:inline ml-1">Dashboard</span>
               </Link>
             )}
 
@@ -64,6 +69,7 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
+ 
     </header>
   );
 };

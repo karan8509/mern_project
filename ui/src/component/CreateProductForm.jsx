@@ -6,12 +6,13 @@ import usePrductStore from "../stores/useProductStore";
 
 const categories = [
   "jeans",
-  "t-shirts",
+  "dresses",
   "shoes",
-  "glasses",
+  "women",
   "jackets",
   "suits",
   "bags",
+  "heels",
 ];
 
 const CreateProductForm = () => {
@@ -25,7 +26,6 @@ const CreateProductForm = () => {
 
 
   const loading = false;
-
   const {createProduct} = usePrductStore()
 
   const handleSubmit = async (e) => {

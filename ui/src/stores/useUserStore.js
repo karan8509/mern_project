@@ -15,15 +15,13 @@ const useUserStore = create((set, get) => ({
     }
     try {
       const {
-        data: { success, message, user },
-      } = await axios.post("/auth/signup", {
+        data: { success, message, user }, } = await axios.post("/auth/signup", {
         name,
         email,
         password,
         confirmPassword,
       });
       set({ user, loding: false });
-
       {
         !success ? toast.error(message) : toast.success(message); //  only use ternary operator
       }
@@ -73,7 +71,6 @@ const useUserStore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
       const user = await axios.get("/auth/profile");
-      // console.log("--->krn role", typeof user?.data?.role);
       set({ user: user, checkingAuth: false });
   
     } catch (error) {
@@ -87,6 +84,7 @@ const useUserStore = create((set, get) => ({
       await axios.post("/auth/logout");
       set({ user: null, checkingAuth: false });
     } catch (error) {
+      set({checkingAuth : false})
       toast.error(error.response?.data?.message);
     }
   },
