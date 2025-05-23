@@ -6,7 +6,7 @@ const cloudinary = require("../config/cloudinary");
 const getAllproducts = async (req, res) => {
   try {
     const product = await Product.find({});
-    res.json({ product });
+    res.json(product);
   } catch (error) {
     console.log("error in getAllproduct products");
     res.json({ message: "server error", error: error.message });
@@ -35,12 +35,12 @@ const getFeatureProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { name, description, price, image, category } = req.body;
-    console.log("->" , name, description, price, image, category )
+    console.log("->", name, description, price, image, category)
 
-    let cloudinaryResponse =  null;
-  		if (image) {
-			cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
-		}  
+    let cloudinaryResponse = null;
+    if (image) {
+      cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
+    }
     const product = await Product.create({
       name,
       description,
@@ -49,9 +49,9 @@ const createProduct = async (req, res) => {
       category,
     });
 
-    console.log("productUrl --->", product.image);
+    console.log("productUrl --->", product);
 
-    res.status(201).json(product);
+    res.status(201).json({ product });
   } catch (error) {
     console.error("Error in Create Product controller:", error.message);
     res.json({ success: false, message: "Server Error", error: error.message });
@@ -61,14 +61,15 @@ const createProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+    console.log(req.params.id)
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    console.log("kese url hai " , product.image)
+    console.log("kese url hai ", product.image)
     if (product.image) {
       const publicId = product.image.split("/").pop().split(".")[0];
       try {
-        await v2.uploader.destroy(`products/${publicId}`);
+        await cloudinary.uploader.destroy(`products/${publicId}`);
         console.log("deleted image from cloduinary");
       } catch (error) {
         console.log("error deleting image from cloduinary", error);
@@ -82,9 +83,46 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getRecommendedProducts = async (req, res) => {
+  try {
+    const recommendation = await Product.aggregate([
+      { $sample: 4 },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          image: 1,
+          price: 1
+        }
+      }
+    ])
+    res.json(recommendation)
+
+  } catch (error) {
+    console.log("Error in getRecimmendedProducts ")
+    res.json({ message: "server error", error: error.message })
+  }
+}
+
+
+  const  getProductsByCategory = async (req , res) => {
+    try {
+      const {category} = req.params
+      const products = await Product.find({category});
+      res.json({products})
+        } catch (error) {
+       console.log("Error in getProductByCategory Controlles")
+       res.json({message: "server error "  , eroror : error.message})
+    }
+  } 
+// toggleFeaturedProduct//  pending this routes
+
 module.exports = {
   getAllproducts,
   getFeatureProducts,
   createProduct,
   deleteProduct,
+  getRecommendedProducts,
+  getProductsByCategory
 };
