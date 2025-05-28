@@ -76,11 +76,15 @@ svg {
 .nav-link:hover {
   color: #34d399;
 }
+.cart-wrapper {
+  position: relative;
+  display: inline-block;
+}
 
 .cart-badge {
   position: absolute;
-  top: -0.6rem;
-  right: -0.9rem;
+  top: -8px;
+  right: -8px;
   background-color: #10b981;
   color: white;
   border-radius: 9999px;
@@ -91,6 +95,7 @@ svg {
   align-items: center;
   justify-content: center;
 }
+
 
 
 .admin-link {

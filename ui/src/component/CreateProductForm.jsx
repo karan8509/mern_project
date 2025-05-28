@@ -10,7 +10,7 @@ const categories = [
   "shoes",
   "women",
   "jackets",
-  "suits",
+  "tops",
   "bags",
   "heels",
 ];

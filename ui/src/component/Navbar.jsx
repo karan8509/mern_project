@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import "../pages.CssFile/Navbar.css";
 import { useEffect, useState } from "react";
 import useUserStore from "../stores/useUserStore";
-
+import userCartProduct from '../stores/userCartProduct'
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, logout } = useUserStore();
+  const { cart } = userCartProduct()
   const isAdmin = user?.data?.role === "admin";
-   
-  
-  
+
+
+
 
 
   return (
@@ -20,7 +21,7 @@ const Navbar = () => {
           <Link to="/" className="navbar-logo">
             <span>E-Commerce</span>
           </Link>
-      
+
 
           <button
             className="menu-toggle"
@@ -35,12 +36,15 @@ const Navbar = () => {
             <Link to="/" className="nav-link">Home</Link>
 
             {user && (
-              <Link to="/cart" className="nav-link relative group cart-link">
-                <ShoppingCart size={22} />
+              <Link to="/cart" className="nav-link cart-link">
+                <div className="cart-wrapper">
+                  <ShoppingCart size={22} />
+                  <span className="cart-badge">{cart.length}</span>
+                </div>
                 <span className="hidden sm:inline ml-1">Cart</span>
-                <span className="cart-badge">0</span>
               </Link>
             )}
+
 
             {isAdmin && (
               <Link to="/secret-dashboard" className="admin-link">
@@ -69,7 +73,7 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
- 
+
     </header>
   );
 };
