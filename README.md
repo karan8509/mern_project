@@ -1,6 +1,7 @@
 # 🚀 MERN Stack Project
 
- ![image](https://github.com/user-attachments/assets/9d1293a6-a7bf-4515-aa53-6827b392be3d)
+![image](https://github.com/user-attachments/assets/2a0061e5-1788-418a-bbfd-635e90f7dc88)
+
 
 ## 📁 Project Overview
 
