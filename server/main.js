@@ -27,7 +27,7 @@ app.get("/", (req , res) => {
   res.json({ message: "Create API", success: true });
 });  
 
-
+ 
 app.use("/api/auth",authRoutes)
 app.use("/api/product",productRoute)
 app.use("/api/cart"  , cartRoute)
