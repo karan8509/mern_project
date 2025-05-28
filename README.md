@@ -1,5 +1,7 @@
 # 🚀 MERN Stack Project
 
+ ![image](https://github.com/user-attachments/assets/9d1293a6-a7bf-4515-aa53-6827b392be3d)
+
 ## 📁 Project Overview
 
 This is a full-stack web application built using the **MERN stack** – **MongoDB**, **Express.js**, **React.js**, and **Node.js**.  
