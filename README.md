@@ -59,6 +59,5 @@ It demonstrates how to create a complete web app with user authentication, REST 
 ## 📦 Installation & Setup
 
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/karan8509/mern_project
