@@ -2,17 +2,18 @@ import "../pages.CssFile/ProductCard.css";
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import useUserStore from '../stores/useUserStore'
-import userCartProduct from '../stores/useUserStore'
+import useCartProductStore from "../stores/useCartProductStore"
 const ProductCard = ({ product }) => {
-	const {user} = useUserStore()
-	const {addToCart} = userCartProduct();
+	const { user } = useUserStore()
+	const { addToCart } = useCartProductStore();
 	const handleAddToCart = () => {
-		if(!user){
-			toast.error("Please login to add Product to Cart" , {id:"log"})
-		}else{
+		if (!user) {
+			toast.error("Please login to add Product to Cart", { id: "log" })
+			return;
+		} else {
 			addToCart(product)
 		}
-  
+
 	};
 
 	return (
@@ -24,7 +25,7 @@ const ProductCard = ({ product }) => {
 
 			<div className="product-details">
 				<h5 className="product-name">{product.name}</h5>
-        
+
 				<p className="product-price">${product.price}</p>
 				<button className="add-to-cart-btn" onClick={handleAddToCart}>
 					<ShoppingCart size={20} />

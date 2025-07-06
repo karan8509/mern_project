@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../pages.CssFile/Navbar.css";
 import { useEffect, useState } from "react";
 import useUserStore from "../stores/useUserStore";
-import userCartProduct from '../stores/userCartProduct'
+import userCartProduct from '../stores/useCartProductStore'
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, logout } = useUserStore();
@@ -39,7 +39,7 @@ const Navbar = () => {
               <Link to="/cart" className="nav-link cart-link">
                 <div className="cart-wrapper">
                   <ShoppingCart size={22} />
-                  <span className="cart-badge">{cart.length}</span>
+                <span className="cart-badge">{cart.length}</span>
                 </div>
                 <span className="hidden sm:inline ml-1">Cart</span>
               </Link>

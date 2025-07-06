@@ -9,14 +9,21 @@ import { useEffect } from "react";
 import LoadingSpinner from "./component/LoadingSpinner";
 import AdminPage from "./pages/AdminPage";
 import CategoryPages from "./pages/CategoryPages";
+import useCartPrductStore from "./stores/useCartProductStore";
 import "./App.css"; // <-- Custom CSS file
 import CartPages from './pages/CartPages'
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
+  const { getCartItem } = useCartPrductStore()
 
   useEffect(() => {
     checkAuth();
+    getCartItem()
   }, [checkAuth]);
+
+  useEffect(() => {
+    getCartItem()
+  }, [getCartItem])
 
   if (checkingAuth) return <LoadingSpinner />;
 

@@ -3,14 +3,12 @@ import CategoryItem from "../component/CategoryItem";
 
 
 const categories = [
- 
-  { href: "/jackets", name: "jackets", imageUrl: "/jocket.png" },
+   { href: "/jackets", name: "jackets", imageUrl: "/jocket.png" },
   { href: "/bags", name: "Bags", imageUrl: "/bag.jpg" },
   { href: "/dresses", name: "Dresses", imageUrl: "/dresse.jpg" },
   { href: "/jeans", name: "jeans", imageUrl: "/pant.jpg" },
   { href: "/heels", name: "Heels", imageUrl: "/heel.jpg" },
   { href: "/tops", name: "Tops", imageUrl: "/top.png" } 
-
 ];
 
 const HomePage = () => {

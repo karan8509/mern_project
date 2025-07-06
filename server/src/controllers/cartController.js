@@ -2,15 +2,13 @@ const Product = require("../models/productModel");
 
 
 const getCartProduct = async (req, res) => {
-  try {
+  try { 
     const products = await Product.find({
       _id: { $in: req.user.cartItems.map((e) => e.product) },
     });
-
+    console.log("products -->" , products)
     // products //  is me jese 3 id hai 
-
     // products.map((product)  is me aa jaye gi fir cartItem me cheack kr ga  ki kitni id hai fir use updata kr dega quanti me
-
     const cartItems = products.map((product) => {
       const item = req.user.cartItems.find(
         (cartItem) => cartItem.product === product._id
