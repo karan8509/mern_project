@@ -1,6 +1,6 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
-const client = require("../config/redis");
+// const client = require("../config/redis");
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
@@ -16,15 +16,15 @@ const generateToken = (userId) => {
   };
 };
 
-const storeRefreshToken = async (userId, refreshToken) => {
-  const _userId = mongoose.isValidObjectId(userId) ? userId?.toString(): userId;
-  await client.set(
-    `refresh_token-${_userId}`, // key
-    refreshToken, // value
-    "EX",
-    7 * 24 * 60 * 60
-  );
-};
+// const storeRefreshToken = async (userId, refreshToken) => {
+//   const _userId = mongoose.isValidObjectId(userId) ? userId?.toString(): userId;
+//   await client.set(
+//     `refresh_token-${_userId}`, // key
+//     refreshToken, // value
+//     "EX",
+//     7 * 24 * 60 * 60
+//   );
+// };
 
 const setcookies = (res, refreshToken) => {
   // res.cookie("accessToken", accessToken, {
@@ -60,7 +60,7 @@ const signup = async (req, res) => {
     
     const { refreshToken } = generateToken(user._id);
 
-     await storeRefreshToken(user._id, refreshToken); // redis database
+    //  await storeRefreshToken(user._id, refreshToken); // redis database
      setcookies(res, refreshToken);
 
     res.json({
@@ -96,7 +96,7 @@ const login = async (req, res) => {
       return;
     }
     const { refreshToken } = generateToken(user._id);
-    await storeRefreshToken(user._id, refreshToken); // redis database
+    // await storeRefreshToken(user._id, refreshToken); // redis database
     setcookies(res, refreshToken);
 
     res.json({
@@ -168,7 +168,7 @@ const logout = async (req, res) => {
 
 const getProfile = (req , res) => {
   try {
-      const user = req.user;
+      const user = req.cookies;
       res.json(user)
   } catch (error) {
     res.json({error : error.message})

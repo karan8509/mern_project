@@ -25,7 +25,7 @@ const App = () => {
     getCartItem()
   }, [getCartItem])
 
-  if (checkingAuth) return <LoadingSpinner />;
+  if (checkingAuth) return <LoadingSpinner />
 
   return (
     <div className="app-container">
