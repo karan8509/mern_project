@@ -40,7 +40,13 @@ It demonstrates how to create a complete web app with user authentication, REST 
 - JWT Access & Refresh Token flow  
 - Password encrypted using **bcryptjs**  
 - Refresh token stored in **Redis**  
-- Frontend state management with **Zustand**  
+- Frontend state management with **Zustand**
+
+## 🚧 Planned Features
+
+- 🛒 **Add to Cart functionality** – Coming soon!  
+  Users will be able to add products to their cart and view/manage it before checkout.
+
 
 ---
 
